@@ -1,7 +1,11 @@
 package task_manager;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import windows.*;
 
 /**
@@ -23,7 +27,16 @@ public class InterfaceManager {
     private tela_buscarProduto interfaceBuscarProduto = null;
     private tela_buscarCliente interfaceBuscarCliente = null;
     
+    DomainManager DomMan;
     
+    public InterfaceManager(){
+        try {
+            DomMan = new DomainManager();
+        } catch (ClassNotFoundException | SQLException exex) {
+            JOptionPane.showMessageDialog(interfaceMain, "Erro ao carregar banco de Dados");
+            System.exit(1);
+        }
+    }
     
     public void abrirTelaLogin(){
         if(interfaceLogin == null)
@@ -128,6 +141,6 @@ public class InterfaceManager {
         //</editor-fold>
 
         InterfaceManager InterMng = new InterfaceManager();
-        InterMng.abrirTelaLogin();
+        InterMng.abrirTelaPrincipal(InterMng);
     }
 }

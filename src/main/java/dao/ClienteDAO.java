@@ -9,6 +9,6 @@ package dao;
  *
  * @author gugag
  */
-public class DataBase {
+public class ClienteDAO {
     
 }

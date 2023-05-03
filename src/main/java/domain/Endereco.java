@@ -11,50 +11,27 @@ import java.io.Serializable;
  */
 
 
-public class Endereco implements Serializable{
+public class Endereco{
     
     private int idEndereco;
-    
     private String cep;   
     private String bairro;
     private String logradouro;
     private int numero;
-    private String complemento;
-    private String referencia;  
     private String cidade;
     private String uf;   
 
     public Endereco() {
     }
 
-    public Endereco(String cep, String uf, String bairro, String cidade, String logradouro, String complemento) {
-        this.cep = cep;
-        this.uf = uf;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-    }
-
-    // Para ser UTILIZADO pela classe CLIENTE
-    public Endereco(String cep, String bairro, String logradouro, int num, String complemento, String ref) {
-        this.cep = cep;
-        this.uf = "";
-        this.bairro = bairro;
-        this.cidade = "";
-        this.logradouro = logradouro;
-        this.numero = num;
-        this.complemento = complemento;
-        this.referencia = ref;
-    }
-
-    
-    public int getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(int idEndereco) {
+    public Endereco(int idEndereco, String cep, String bairro, String logradouro, int numero, String cidade, String uf) {
         this.idEndereco = idEndereco;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.uf = uf;
     }
 
     public String getCep() {
@@ -97,14 +74,6 @@ public class Endereco implements Serializable{
         this.logradouro = logradouro;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
     public int getNumero() {
         return numero;
     }
@@ -112,14 +81,4 @@ public class Endereco implements Serializable{
     public void setNumero(int numero) {
         this.numero = numero;
     }
-
-    public String getReferencia() {
-        return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
-
-    
 }
