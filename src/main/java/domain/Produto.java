@@ -5,18 +5,42 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author gugag
  */
-public class Produto {
+
+@Entity
+public class Produto implements Serializable{
     
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idProduto;
+    
+    @Column (updatable = false, nullable = false, length = 50)
     private String nome;
+    
+    @ManyToOne
+    @JoinColumn(name = "idCategoria")
     private CategoriaProduto categoria;
+    
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (name = "Produto_Material",
+                joinColumns = {@JoinColumn ( name = "idProduto")},
+                inverseJoinColumns = {@JoinColumn ( name = "idMaterial")})
     private List<Material> listaMateriais;
+    
+    @ManyToMany (fetch = FetchType.LAZY)
+    @JoinTable (name = "Pedido_Produto",
+                joinColumns = {@JoinColumn ( name = "idProduto")},
+                inverseJoinColumns = {@JoinColumn ( name = "idPedido")})
+    private List<Pedido> listaPedidos;
+    
+    @Column (nullable = false, length = 15)
     private double valor;
 
     public Produto(String nome, CategoriaProduto categoria, List<Material> materiais, double valor) {

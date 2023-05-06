@@ -43,6 +43,7 @@ windows\tela_cadastrarSenha$3.class
 windows\tela_cadastroProduto$7.class
 funcoesUteis\WebServiceCep$Xml.class
 windows\tela_login$3.class
+dao\ConexaoHibernate.class
 windows\tela_cadastroPedido.class
 windows\tela_buscarCliente$1.class
 windows\tela_principal$7.class

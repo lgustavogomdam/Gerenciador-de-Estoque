@@ -5,26 +5,51 @@
  */
 package domain;
 
-import java.sql.Date;
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author gugag
  */
-public class Pedido implements Venda{
+
+@Entity
+public class Pedido implements Venda, Serializable{
     
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idPedido;
+    
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn ( name = "idCliente")
     private Cliente cliente;
+    
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (name = "Pedido_Produto",
+                joinColumns = {@JoinColumn ( name = "idPedido")},
+                inverseJoinColumns = {@JoinColumn ( name = "idProduto")})
     private List<Produto> itensPedido;
+    
+    @Temporal ( TemporalType.DATE )
     private Date dataPedido;
+    
+    @ManyToOne
+    @JoinColumn(name = "idPagamento")
     private Pagamento pagamento;
+    
+    @Column (nullable = false)
     private boolean statusConcluido;
+    
+    @Column (nullable = false, length = 15)
     private double valorFinal;
 
     public Pedido(Cliente cliente, List<Produto> itensPedido, Date dataPedido, Pagamento pagamento, double valorFinal) {
         this.cliente = cliente;
-        this.itensPedido = itensPedido;
+        this.itensPedido = new ArrayList();
         this.dataPedido = dataPedido;
         this.pagamento = pagamento;
         this.statusConcluido = false;

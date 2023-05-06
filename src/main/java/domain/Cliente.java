@@ -5,19 +5,41 @@
  */
 package domain;
 
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.*;
+
 /**
  *
  * @author gugag
  */
-public class Cliente {
-    
-    private int idCliente;
-    private String nome;
-    private String cpf;
-    private String telefone;
-    private Endereco endereco;
 
-    public Cliente(String nomeCliente, String cpf, String numeroTelefone, Endereco enderecoCliente) {
+@Entity
+public class Cliente implements Serializable{
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int idCliente;
+    
+    @Column (updatable = false, nullable = false, length = 50)
+    private String nome;
+    
+    @Column (updatable = false, nullable = false, length = 11, unique = true)
+    private String cpf;
+    
+    @Column (updatable = true, nullable = false, length = 11)
+    private String telefone;
+    
+    @OneToMany ( mappedBy = "cliente",
+                fetch = FetchType.LAZY)
+    private List<Endereco> endereco;
+    
+    @OneToMany ( mappedBy = "cliente",
+                fetch = FetchType.LAZY)
+    private List<Pedido> pedido;
+
+    public Cliente(String nomeCliente, String cpf, String numeroTelefone, List<Endereco> enderecoCliente) {
         this.nome = nomeCliente;
         this.cpf = cpf;
         this.telefone = numeroTelefone;
@@ -48,11 +70,11 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public Endereco getEndereco() {
+    public List<Endereco> getEndereco() {
         return this.endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(List<Endereco> endereco) {
         this.endereco = endereco;
     }
     

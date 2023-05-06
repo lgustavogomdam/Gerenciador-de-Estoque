@@ -5,17 +5,36 @@
  */
 package domain;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.*;
+
 /**
  *
  * @author gugag
  */
-public class Fornecedor {
-    
-    private int idFornecedor;
-    private String nome;
-    private Endereco endereco;
 
-    public Fornecedor(int idFornecedor, String nome, Endereco endereco) {
+@Entity
+public class Fornecedor implements Serializable{
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int idFornecedor;
+    
+    @Column (updatable = false, nullable = false, length = 30)
+    private String nome;
+    
+    @ManyToMany (fetch = FetchType.LAZY)
+    @JoinTable (name = "Material_Fornecedor",
+                joinColumns = {@JoinColumn ( name = "idFornecedor")},
+                inverseJoinColumns = {@JoinColumn ( name = "idMaterial")})
+    private List<Material> listaMateriaisFornecidos;
+    
+    @OneToMany ( mappedBy = "fornecedor",
+                fetch = FetchType.LAZY)
+    private List<Endereco> endereco;
+
+    public Fornecedor(int idFornecedor, String nome, List<Endereco> endereco) {
         this.idFornecedor = idFornecedor;
         this.nome = nome;
         this.endereco = endereco;
@@ -29,11 +48,11 @@ public class Fornecedor {
         this.nome = nome;
     }
 
-    public Endereco getEndereco() {
+    public List<Endereco> getEndereco() {
         return this.endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(List<Endereco> endereco) {
         this.endereco = endereco;
     }
 

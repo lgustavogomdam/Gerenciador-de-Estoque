@@ -5,7 +5,7 @@
  */
 package task_manager;
 
-import static dao.ConexaoDB.obterConexao;
+import static dao.ConexaoHibernate.getSessionFactory;
 import java.sql.SQLException;
 
 /**
@@ -15,6 +15,6 @@ import java.sql.SQLException;
 public class DomainManager {
     
     public DomainManager() throws ClassNotFoundException, SQLException{
-        obterConexao();
+        getSessionFactory();
     }
 }

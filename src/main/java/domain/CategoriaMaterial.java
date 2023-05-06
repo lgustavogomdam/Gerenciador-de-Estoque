@@ -5,13 +5,22 @@
  */
 package domain;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
 /**
  *
  * @author gugag
  */
-public class CategoriaMaterial {
+
+@Entity
+public class CategoriaMaterial implements Serializable{
     
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idCategoriaMaterial;
+    
+    @Column (updatable = false, nullable = false, length = 50)
     private String nome;
 
     public CategoriaMaterial(int idCategoriaMaterial, String nome) {

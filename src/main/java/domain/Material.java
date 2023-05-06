@@ -5,19 +5,45 @@
  */
 package domain;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.*;
+
 /**
  *
  * @author gugag
  */
-public class Material {
-    
-    private int idMaterial;
-    private String nome;
-    private double valor;
-    private CategoriaMaterial categoria;
-    private Fornecedor fornecedor;
 
-    public Material(int idMaterial, String nome, double valor,  Fornecedor fornecedor, CategoriaMaterial categoria) {
+@Entity
+public class Material implements Serializable{
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int idMaterial;
+    
+    @Column (updatable = false, nullable = false, length = 50)
+    private String nome;
+    
+    @Column (updatable = true, nullable = false, length = 10)
+    private double valor;
+    
+    @ManyToOne
+    @JoinColumn(name = "idCategoria")
+    private CategoriaMaterial categoria;
+    
+    @ManyToMany (fetch = FetchType.LAZY)
+    @JoinTable (name = "Produto_Material",
+                joinColumns = {@JoinColumn ( name = "idMaterial")},
+                inverseJoinColumns = {@JoinColumn ( name = "idProduto")})
+    private List<Produto> listaProdutos;
+    
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (name = "Material_Fornecedor",
+                joinColumns = {@JoinColumn ( name = "idMaterial")},
+                inverseJoinColumns = {@JoinColumn ( name = "idFornecedor")})
+    private List<Fornecedor> fornecedor;
+
+    public Material(int idMaterial, String nome, double valor,  List<Fornecedor> fornecedor, CategoriaMaterial categoria) {
         this.idMaterial = idMaterial;
         this.nome = nome;
         this.valor = valor;
@@ -57,11 +83,11 @@ public class Material {
         this.categoria = categoria;
     }
 
-    public Fornecedor getFornecedor() {
+    public List<Fornecedor> getFornecedor() {
         return this.fornecedor;
     }
 
-    public void setFornecedor(Fornecedor fornecedor) {
+    public void setFornecedor(List<Fornecedor> fornecedor) {
         this.fornecedor = fornecedor;
     }
     
